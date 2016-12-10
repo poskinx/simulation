@@ -65,6 +65,7 @@ def setup(env, num_servers):
     # # Generate 4 initial petitions
     # for i in range(4):
     #     env.process(petition(env, 'Petition %d' % i, queue))
+
     y = 0
     # Generate more petitions while the simulation is running
     while True:

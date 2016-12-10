@@ -4,10 +4,10 @@ from matplotlib import pyplot as plt
 from matplotlib import style
 
 ###### General variables ######
-LAMBDA = 20         # paq/second //each queue sees half of arrivals
+LAMBDA = 20         # paq/second //when calculating transfer time theoretical each queue sees half of arrivals
 MU = 25             # paq/second
 SERVICE_T = 0.04    # Average service time (exponential time)
-ARRIVAL_T = 0.05    # Average arrival time (exponential time) //each queue sees half of arrivals
+ARRIVAL_T = 0.05    # Average arrival time (exponential time)
 NUM_SERVERS = 1     # number of servers in the queue
 SIM_TIME = 350      # time of simulation in seconds, T:{35, 175, 350, 1750}
 SIM_NUM = 20        # number of simulations
@@ -66,6 +66,7 @@ def setup(env, num_servers):
     # # Generate 4 initial petitions
     # for i in range(4):
     #     env.process(petition(env, 'Petition %d' % i, queue))
+
     y = 0
     # Generate more petitions while the simulation is running
     while True:

@@ -65,6 +65,7 @@ def setup(env, num_servers):
     # # Generate 4 initial petitions
     # for i in range(4):
     #     env.process(petition(env, 'Petition %d' % i, queue))
+
     y = 0
     # Generate more petitions while the simulation is running
     while True:
@@ -79,7 +80,7 @@ def setup(env, num_servers):
 for i in range(0, SIM_NUM):
 
     # Setup and start the simulation
-    print('MM1 Queue')
+    print('MM2 Queue')
     # Create an environment and start the setup process
     env = simpy.Environment()
     env.process(setup(env, NUM_SERVERS))
