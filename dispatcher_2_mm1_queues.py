@@ -4,13 +4,13 @@ from matplotlib import pyplot as plt
 from matplotlib import style
 
 ###### General variables ######
-SIM_NUM = 20
-LAMBDA = 20/2     # paq/second //each queue sees half of arrivals
-MU = 25           # paq/second
-SERVICE_T = 0.04  # Average service time (exponential time)
-ARRIVAL_T = 0.1   # Average arrival time (exponential time) //each queue sees half of arrivals
-NUM_SERVERS = 1   # number of servers in the queue
-SIM_TIME = 35     # time of simulation in seconds, T:{35, 175, 350, 1750}
+LAMBDA = 20         # paq/second //each queue sees half of arrivals
+MU = 25             # paq/second
+SERVICE_T = 0.04    # Average service time (exponential time)
+ARRIVAL_T = 0.05    # Average arrival time (exponential time) //each queue sees half of arrivals
+NUM_SERVERS = 1     # number of servers in the queue
+SIM_TIME = 350      # time of simulation in seconds, T:{35, 175, 350, 1750}
+SIM_NUM = 20        # number of simulations
 TRANSFER_TIME = []
 AVERAGE_TT = []
 
@@ -59,8 +59,9 @@ def petition(env, name, queue, service_time):
 def setup(env, num_servers):
     """Create a queue and keep creating petitions approx. every
     ``arrival_time`` seconds."""
-    # Create the queue
-    queue = Queue(env, num_servers)
+    # Create the queues
+    queue1 = Queue(env, num_servers)
+    queue2 = Queue(env, num_servers)
 
     # # Generate 4 initial petitions
     # for i in range(4):
@@ -73,7 +74,11 @@ def setup(env, num_servers):
         mu = 1 / SERVICE_T
         service_time = random.expovariate(mu)
         y += 1
-        env.process(petition(env, 'Petition %d' % y, queue, service_time))
+        aux = random.randint(1, 2)
+        if aux == 1:
+            env.process(petition(env, 'Petition %d' % y, queue1, service_time))
+        else:
+            env.process(petition(env, 'Petition %d' % y, queue2, service_time))
 
 for i in range(0, SIM_NUM):
 
@@ -86,15 +91,18 @@ for i in range(0, SIM_NUM):
     # Execute!
     env.run(until=SIM_TIME)
 
+    # Calculating the average of each simulation
     AVERAGE_TT.append(sum(TRANSFER_TIME)/len(TRANSFER_TIME))
-
     print("Average %d transfer time : %.9f" % (i, AVERAGE_TT[i]))
+
 
 x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 y = AVERAGE_TT
-R = (1/(MU-LAMBDA))
-y2 = [R] * SIM_NUM
+
+R = (1/(MU-(LAMBDA/2)))
 print('Theoretical transfer time %.8f' % R)
+
+y2 = [R] * SIM_NUM
 
 style.use('ggplot')
 

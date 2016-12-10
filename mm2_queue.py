@@ -4,13 +4,13 @@ from matplotlib import pyplot as plt
 from matplotlib import style
 
 ###### General variables ######
-SIM_NUM = 20
-LAMBDA = 20       # paq/second
-MU = 25           # paq/second
-SERVICE_T = 0.04  # Average service time (exponential time)
-ARRIVAL_T = 0.05  # Average arrival time (exponential time)
-NUM_SERVERS = 2   # number of servers in the queue
-SIM_TIME = 35     # time of simulation in seconds, T:{35, 175, 350, 1750}
+LAMBDA = 20         # paq/second
+MU = 25             # paq/second
+SERVICE_T = 0.04    # Average service time (exponential time)
+ARRIVAL_T = 0.05    # Average arrival time (exponential time)
+NUM_SERVERS = 2     # number of servers in the queue
+SIM_TIME = 35       # time of simulation in seconds, T:{35, 175, 350, 1750}
+SIM_NUM = 20        # number of simulations
 TRANSFER_TIME = []
 AVERAGE_TT = []
 
@@ -87,16 +87,18 @@ for i in range(0, SIM_NUM):
     # Execute!
     env.run(until=SIM_TIME)
 
+    # Calculating the average of each simulation
     AVERAGE_TT.append(sum(TRANSFER_TIME)/len(TRANSFER_TIME))
-
     print("Average %d transfer time : %.9f" % (i, AVERAGE_TT[i]))
+
 
 x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 y = AVERAGE_TT
-rho = LAMBDA/(MU*NUM_SERVERS)
-R = 1/21  # calculat a la llibreta!
-y2 = [R] * SIM_NUM
+
+R = 1/21  # that value was previously calculated
 print('Theoretical transfer time %.8f' % R)
+
+y2 = [R] * SIM_NUM
 
 style.use('ggplot')
 

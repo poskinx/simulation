@@ -9,7 +9,7 @@ MU = 50             # paq/second
 SERVICE_T = 0.02    # Average service time (exponential time)
 ARRIVAL_T = 0.05    # Average arrival time (exponential time)
 NUM_SERVERS = 1     # number of servers in the queue
-SIM_TIME = 350       # time of simulation in seconds, T:{35, 175, 350, 1750}
+SIM_TIME = 350      # time of simulation in seconds, T:{35, 175, 350, 1750}
 SIM_NUM = 20        # number of simulations
 TRANSFER_TIME = []  # array to accumulate the transfer time of each petition processed
 AVERAGE_TT = []     # array to accumulate the mean transfer time of each simulation
@@ -87,13 +87,17 @@ for i in range(0, SIM_NUM):
     # Execute!
     env.run(until=SIM_TIME)
 
+    # Calculating the average of each simulation
     AVERAGE_TT.append(sum(TRANSFER_TIME)/len(TRANSFER_TIME))
-
     print("Average %d transfer time : %.9f" % (i, AVERAGE_TT[i]))
+
 
 x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 y = AVERAGE_TT
+
 R = 1/(MU-LAMBDA)
+print('Theoretical transfer time %.8f' % R)
+
 y2 = [R] * SIM_NUM
 
 style.use('ggplot')
